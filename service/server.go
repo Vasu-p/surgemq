@@ -241,6 +241,9 @@ func (this *Server) Close() error {
 
 // HandleConnection is for the broker to handle an incoming connection from a client
 func (this *Server) handleConnection(c io.Closer) (svc *service, err error) {
+
+	fmt.Println("server.go:: handleConnection")
+
 	if c == nil {
 		return nil, ErrInvalidConnectionType
 	}
@@ -279,6 +282,9 @@ func (this *Server) handleConnection(c io.Closer) (svc *service, err error) {
 	resp := message.NewConnackMessage()
 
 	req, err := getConnectMessage(conn)
+
+	fmt.Println(req)
+
 	if err != nil {
 		if cerr, ok := err.(message.ConnackCode); ok {
 			//glog.Debugf("request   message: %s\nresponse message: %s\nerror           : %v", mreq, resp, err)
